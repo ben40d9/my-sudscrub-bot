@@ -14,8 +14,8 @@
 //   return (
 //     <div className="feedback-form">
 //       <h2>
-//         Provide feedback to help improve the bot's response and rate the
-//         response:
+//         Provide feedback to help improve the response and then rate the
+// response:
 //       </h2>
 //       <input
 //         type="text"
@@ -51,7 +51,7 @@ export default function FeedbackForm({ onSubmit }) {
   return (
     <div className="feedback-form">
       <h2>
-        Provide feedback to help improve the bot's response and rate the
+        Provide feedback to help improve the response and then rate the
         response:
       </h2>
       <input
