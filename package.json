@@ -2,6 +2,7 @@
   "name": "my-sudscrub-bot",
   "version": "0.1.0",
   "private": true,
+ 
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cohere-ai": "^5.1.0",
     "dotenv": "^16.3.1",
     "langchain": "^0.0.129",
     "mongodb": "^5.7.0",
