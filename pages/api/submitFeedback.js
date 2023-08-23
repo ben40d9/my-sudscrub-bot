@@ -1,6 +1,6 @@
 import { connectToDatabase } from "../../src/utils/mongodb/db.js";
 
-export default async (req, res) => {
+const submitFeedback = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
@@ -16,3 +16,5 @@ export default async (req, res) => {
   // Send success response
   res.status(200).json({ success: true });
 };
+
+export default submitFeedback;
