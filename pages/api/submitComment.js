@@ -1,7 +1,7 @@
 import { connectToDatabase } from "../../src/utils/mongodb/db.js";
 import { ingestDataToMongoDB } from "../../src/utils/mongodb/ingestDataToMongoDb.js";
 
-export default async (req, res) => {
+const submitComment = async (req, res) => {
   if (req.method === "POST") {
     const comment = req.body.comment;
 
@@ -24,3 +24,5 @@ export default async (req, res) => {
     res.status(405).json({ success: false, message: "Method not allowed." });
   }
 };
+
+export default submitComment;

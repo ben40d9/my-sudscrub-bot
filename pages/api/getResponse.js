@@ -1,7 +1,7 @@
 import { connectToDatabase } from "../../src/utils/mongodb/db.js";
 import { generateResponse } from "../../src/utils/generateResponse.js";
 
-export default async (req, res) => {
+const getResponse = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
@@ -26,3 +26,5 @@ export default async (req, res) => {
 
   res.json({ response, continuation, topComments });
 };
+
+export default getResponse;
