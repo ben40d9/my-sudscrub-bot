@@ -103,8 +103,6 @@ export const mongodbPerformSimilaritySearch = async (comment) => {
       };
     });
 
-    console.log(similarComments);
-
     return similarComments;
   } catch (error) {
     console.error("An error occurred:", error);
