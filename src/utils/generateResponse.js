@@ -27,6 +27,21 @@ export const generateResponse = async (comment, feedback = "") => {
   // Fetch the 5 most similar comments to the given comment
   let similarComments = await mongodbPerformSimilaritySearch(comment);
 
+  const commonPhrases = similarComments
+    .map((comment) => comment.comment)
+    .join(" ")
+    .split(" ") // Simple tokenization, can be improved with NLP techniques
+    .reduce((acc, word) => {
+      acc[word] = (acc[word] || 0) + 1;
+      return acc;
+    }, {});
+
+  const topPhrases = Object.entries(commonPhrases)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map((entry) => entry[0])
+    .join(", ");
+
   // Include both comments and their similarity scores in the conversation history
   const conversationHistory = similarComments
     .map(
@@ -37,9 +52,9 @@ export const generateResponse = async (comment, feedback = "") => {
     )
     .join("\n");
 
-  let prompt = `${character}\nThis is company information to help you answer any questions our customers may comment: ${knowledge}\n\nRespond to the following comment in a friendly, helpful, and fun manner acting as if you were the Sud Scrub Social Media Manager:\n${conversationHistory}\n${comment}:`;
+  // let prompt = `${character}\nThis is company information to help you answer any questions our customers may comment: ${knowledge}\nFrequently used phrases in similar comments: ${topPhrases}\n\nRespond to the following comment in a friendly, helpful, and fun manner acting as if you were the Sud Scrub Social Media Manager:\n${conversationHistory}\n${comment}:`;
 
-  // let prompt = `${character}\n${knowledge}\n\nRespond to the following comment in a friendly, helpful, and fun manner:\n${conversationHistory}\n${comment}:`;
+  let prompt = `${character}\n${knowledge}\n\nRespond to the following comment in a friendly, helpful, and fun manner:\n${conversationHistory}\n${comment}:`;
 
   if (feedback) {
     prompt += `\n\nFeedback: ${feedback}`;
@@ -54,24 +69,52 @@ export const generateResponse = async (comment, feedback = "") => {
 
   let responseText = response.choices[0].text.trim();
 
-  // Split the response into chunks of 150 characters, focusing on spaces
+  // // Split the response into chunks of 150 characters, focusing on spaces
+  // let responseChunks = [];
+  // while (responseText.length > 150) {
+  //   // Find the nearest space before the 150 character limit
+  //   const splitIndex = responseText.lastIndexOf(" ", 150);
+
+  //   // If no space is found, split at the 150th character
+  //   const chunk =
+  //     splitIndex > 0
+  //       ? responseText.substring(0, splitIndex)
+  //       : responseText.substring(0, 150);
+
+  //   responseChunks.push(chunk);
+  //   responseText = responseText
+  //     .substring(splitIndex > 0 ? splitIndex : 150)
+  //     .trim();
+  // }
+  // responseChunks.push(responseText);
+
+  // // Return the response in the desired format
+  // if (responseChunks.length > 1) {
+  //   return {
+  //     response: responseChunks[0],
+  //     continuation: "Continued: " + responseChunks[1],
+  //     topComments: [], // Include your logic for topComments if needed
+  //   };
+  // } else {
+  //   return {
+  //     response: responseChunks[0],
+  //     continuation: "",
+  //     topComments: [], // Include your logic for topComments if needed
+  //   };
+  // }
+
+  // Split the response into logical chunks of 150 characters, focusing on sentence boundaries
   let responseChunks = [];
-  while (responseText.length > 150) {
-    // Find the nearest space before the 150 character limit
-    const splitIndex = responseText.lastIndexOf(" ", 150);
-
-    // If no space is found, split at the 150th character
-    const chunk =
-      splitIndex > 0
-        ? responseText.substring(0, splitIndex)
-        : responseText.substring(0, 150);
-
-    responseChunks.push(chunk);
-    responseText = responseText
-      .substring(splitIndex > 0 ? splitIndex : 150)
-      .trim();
-  }
-  responseChunks.push(responseText);
+  let currentChunk = "";
+  responseText.split(". ").forEach((sentence) => {
+    if (currentChunk.length + sentence.length <= 150) {
+      currentChunk += sentence + ". ";
+    } else {
+      responseChunks.push(currentChunk.trim());
+      currentChunk = sentence + ". ";
+    }
+  });
+  responseChunks.push(currentChunk.trim());
 
   // Return the response in the desired format
   if (responseChunks.length > 1) {
