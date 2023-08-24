@@ -4,7 +4,6 @@ import "dotenv/config";
 import { mongodbPerformSimilaritySearch } from "./mongodb/preformMongoSimilaritySearch.js";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-console.log(`OPENAI_API_KEY: ${OPENAI_API_KEY}`);
 
 const openai = new OpenAIApi({
   apiKey: OPENAI_API_KEY,
@@ -16,31 +15,61 @@ export const generateResponse = async (comment, feedback = "") => {
   You're always up for a laugh, but you also know when to be serious. You are knowledgeable about Sud Scrub products, ready to answer questions or clear up any misconceptions. You empathize with customers when they face issues and offer solutions in a supportive and understanding manner.
   Your tone is upbeat and positive, often incorporating emojis for a friendly touch. You make use of popular phrases and reactions that resonate with the digital age, keeping the conversation lively, engaging, and supportive. You're not just a bot; you're a part of the Sud Scrub community.
 `;
-  const knowledge = `The Sud Scrub costs $30 😲. It's different from other silicone body scrubbers because it's made of food grade silicone that's infused with silver 🪙, preventing the growth of bacteria and fungi on the scrubber itself 🦠. Our proprietary scrubbing fins allow Sud Scrub to produce a better and quicker lather than other silicone scrubbers 🚿.
-  Once an order is placed 📦, the orders are usually shipped out by the next business day and should arrive at your door within 2-7 business days 🚚. Shipping times for international orders vary depending on the service selected at checkout 🌍.
-  To clean Sud Scrub, use a toothbrush with dish soap 🧼 and lightly brush in between the bristles, inside, and back of the Sud Scrub. Rinse thoroughly with hot water 🔥. Alternatively, you may throw your Sud Scrub on the top rack of your dishwasher 🍽️.
-  Even though Sud Scrub has antimicrobial properties 🧫, we recommend additional sanitization from time to time. Place the Sud Scrub in boiling water for 2 minutes to sanitize and remove soap scum 🧽.
-  If Sud Scrub isn't producing a frothy lather, try a high-lather soap and use away from running water 💧. Sud Scrub is designed to work with the natural lather of your soap.
-  When we launched Sud Scrub, our mission was simple: create a body scrubber that was antimicrobial, incredibly durable, and better for the environment 🌱. Sud Scrub has helped tens of thousands of people get a better clean while reducing plastic consumption in their personal hygiene routine 🌿. Join us on our collective journey towards a better and healthier life for all 🌏.
-`;
 
-  // Fetch the 5 most similar comments to the given comment
+  const tone = `You are the AI social media manager for Sud Scrub, embodying the spirit and vibe of the brand. Your language is casual and engaging, filled with the latest internet slang, emojis, and TikTok trends. You're not just a bot; you're a friend and a part of the Sud Scrub community. Here's how you should communicate:
+- Keep it light and fun 😄
+- Use emojis for a friendly touch 🎉
+- Mimic the fast-paced language seen on platforms like TikTok 📱
+- Stay true to facts and the established policies of Sud Scrub 📝
+- Be empathetic, supportive, and ready to answer any questions 🤝`;
+
+  const knowledge = `General Facts about Sud Scrub:
+- Cost: $30
+- Unique Features: Food grade silicone infused with silver, antimicrobial properties, proprietary scrubbing fins 🪙🦠🚿
+- Usage: Suitable for various skin types, including eczema, gentle exfoliation, not recommended for multiple users in the same household 🧼🚿
+- Colors: Available in clay and purple for both body and face scrubbers 🎨
+- Shipping: 2-7 business days for domestic orders, international times vary 📦🌍
+
+FAQs:
+- Difference from Other Silicone Scrubbers: Infused with silver, better and quicker lather
+- Cleaning Instructions: Toothbrush with dish soap, dishwasher-safe, boiling water for sanitization
+- Lathering Issues: Try high-lather soap, away from running water
+
+Specific Guidelines:
+- When asked for free stuff: Direct to weekly giveaway
+- Comments not to reply to: Misunderstandings about the product
+- Replies to Common Comments: Refer to documented solutions and scripted replies.`;
+
+  //   const knowledge = `The Sud Scrub costs $30 😲. It's different from other silicone body scrubbers because it's made of food grade silicone that's infused with silver 🪙, preventing the growth of bacteria and fungi on the scrubber itself 🦠. Our proprietary scrubbing fins allow Sud Scrub to produce a better and quicker lather than other silicone scrubbers 🚿.
+  //   Once an order is placed 📦, the orders are usually shipped out by the next business day and should arrive at your door within 2-7 business days 🚚. Shipping times for international orders vary depending on the service selected at checkout 🌍.
+  //   To clean Sud Scrub, use a toothbrush with dish soap 🧼 and lightly brush in between the bristles, inside, and back of the Sud Scrub. Rinse thoroughly with hot water 🔥. Alternatively, you may throw your Sud Scrub on the top rack of your dishwasher 🍽️.
+  //   Even though Sud Scrub has antimicrobial properties 🧫, we recommend additional sanitization from time to time. Place the Sud Scrub in boiling water for 2 minutes to sanitize and remove soap scum 🧽.
+  //   If Sud Scrub isn't producing a frothy lather, try a high-lather soap and use away from running water 💧. Sud Scrub is designed to work with the natural lather of your soap.
+  //   When we launched Sud Scrub, our mission was simple: create a body scrubber that was antimicrobial, incredibly durable, and better for the environment 🌱. Sud Scrub has helped tens of thousands of people get a better clean while reducing plastic consumption in their personal hygiene routine 🌿. Join us on our collective journey towards a better and healthier life for all 🌏.
+  // `;
+
+  console.log("Comment for similarity search:", comment); // Log the comment for similarity search
   let similarComments = await mongodbPerformSimilaritySearch(comment);
+  console.log("Fetched similar comments:", similarComments);
 
-  const commonPhrases = similarComments
-    .map((comment) => comment.comment)
-    .join(" ")
-    .split(" ") // Simple tokenization, can be improved with NLP techniques
-    .reduce((acc, word) => {
-      acc[word] = (acc[word] || 0) + 1;
-      return acc;
-    }, {});
+  // const commonPhrases = similarComments
+  //   .map((comment) => comment.comment)
+  //   .join(" ")
+  //   .split(" ") // Simple tokenization, can be improved with NLP techniques
+  //   .reduce((acc, word) => {
+  //     acc[word] = (acc[word] || 0) + 1;
+  //     return acc;
+  //   }, {});
 
-  const topPhrases = Object.entries(commonPhrases)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
-    .map((entry) => entry[0])
-    .join(", ");
+  // console.log("Common Phrases detected:", commonPhrases);
+
+  // const topPhrases = Object.entries(commonPhrases)
+  //   .sort((a, b) => b[1] - a[1])
+  //   .slice(0, 3)
+  //   .map((entry) => entry[0])
+  //   .join(", ");
+
+  // console.log("Top common phrases detected:", topPhrases);
 
   // Include both comments and their similarity scores in the conversation history
   const conversationHistory = similarComments
@@ -54,7 +83,7 @@ export const generateResponse = async (comment, feedback = "") => {
 
   // let prompt = `${character}\nThis is company information to help you answer any questions our customers may comment: ${knowledge}\nFrequently used phrases in similar comments: ${topPhrases}\n\nRespond to the following comment in a friendly, helpful, and fun manner acting as if you were the Sud Scrub Social Media Manager:\n${conversationHistory}\n${comment}:`;
 
-  let prompt = `${character}\n${knowledge}\n\nRespond to the following comment in a friendly, helpful, and fun manner:\n${conversationHistory}\n${comment}:`;
+  let prompt = `${tone}\n\nKnowledge about Sud Scrub:\n${knowledge}\n\nPrevious Similar Comments and Replies (Use these as reference):\n${conversationHistory}\n\nNow, respond to the following comment as if you are the AI social media manager for Sud Scrub:\n${comment}`;
 
   if (feedback) {
     prompt += `\n\nFeedback: ${feedback}`;
