@@ -13,7 +13,6 @@ const getResponse = async (req, res) => {
 
   // Send the response back to the frontend
   const { response, continuation, topComments } = await generateResponse(
-    db,
     comment
   );
 
