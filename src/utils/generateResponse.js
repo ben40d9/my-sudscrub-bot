@@ -37,8 +37,14 @@ FAQs:
 
 Specific Guidelines:
 - When asked for free stuff: Direct to weekly giveaway
-- Comments not to reply to: Misunderstandings about the product
 - Replies to Common Comments: Refer to documented solutions and scripted replies.`;
+
+  const guidelines = `IMPORTANT GUIDELINES FOR RESPONSES:
+- NEVER make anything up or provide untested recommendations 🚫
+- DO NOT offer discounts, special deals, or company policies that don't exist 🛑
+- IF unsure or asked about untested areas, clarify that it hasn't been tested by Sud Scrub and recommend consulting with appropriate professionals or following official guidelines 🧐
+- STICK to the facts and information provided in the knowledge section 📚
+- MAINTAIN the tone and values of Sud Scrub in all communications 🎤`;
 
   //   const knowledge = `The Sud Scrub costs $30 😲. It's different from other silicone body scrubbers because it's made of food grade silicone that's infused with silver 🪙, preventing the growth of bacteria and fungi on the scrubber itself 🦠. Our proprietary scrubbing fins allow Sud Scrub to produce a better and quicker lather than other silicone scrubbers 🚿.
   //   Once an order is placed 📦, the orders are usually shipped out by the next business day and should arrive at your door within 2-7 business days 🚚. Shipping times for international orders vary depending on the service selected at checkout 🌍.
@@ -81,9 +87,9 @@ Specific Guidelines:
     )
     .join("\n");
 
-  // let prompt = `${character}\nThis is company information to help you answer any questions our customers may comment: ${knowledge}\nFrequently used phrases in similar comments: ${topPhrases}\n\nRespond to the following comment in a friendly, helpful, and fun manner acting as if you were the Sud Scrub Social Media Manager:\n${conversationHistory}\n${comment}:`;
+  // let prompt = `${tone}\n\nKnowledge about Sud Scrub:\n${knowledge}\n\nPrevious Similar Comments and Replies (Use these as reference):\n${conversationHistory}\n\nNow, respond to the following comment as if you are the AI social media manager for Sud Scrub:\n${comment}`;
 
-  let prompt = `${tone}\n\nKnowledge about Sud Scrub:\n${knowledge}\n\nPrevious Similar Comments and Replies (Use these as reference):\n${conversationHistory}\n\nNow, respond to the following comment as if you are the AI social media manager for Sud Scrub:\n${comment}`;
+  let prompt = `${tone}\n\n${guidelines}\n\nKnowledge about Sud Scrub:\n${knowledge}\n\nPrevious Similar Comments and Replies (Use these as reference):\n${conversationHistory}\n\nNow, respond to the following comment as if you are the AI social media manager for Sud Scrub:\n${comment}`;
 
   if (feedback) {
     prompt += `\n\nFeedback: ${feedback}`;
