@@ -103,6 +103,7 @@ export const mongodbPerformSimilaritySearch = async (comment) => {
       };
     });
 
+    // console.log(similarComments);
     return similarComments;
   } catch (error) {
     console.error("An error occurred:", error);
@@ -110,4 +111,4 @@ export const mongodbPerformSimilaritySearch = async (comment) => {
   }
 };
 
-// mongodbPerformSimilaritySearch("i want to buy one for my mom");
+// mongodbPerformSimilaritySearch("can i use it on my dog");
