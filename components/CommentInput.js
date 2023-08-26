@@ -24,7 +24,7 @@ export default function CommentInput({ comment, setComment, onSubmit }) {
   const handleCommentSubmit = () => {
     if (comment.trim() === "") return;
     onSubmit();
-    setComment("");
+    // setComment("");
   };
 
   return (
