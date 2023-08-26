@@ -68,9 +68,8 @@ export default function Home() {
   // State to manage user comment, bot's response, continuation, top comments, and loading
   const [comment, setComment] = useState("");
   const [response, setResponse] = useState("");
-  const [continuation, setContinuation] = useState("");
-  const [topComments, setTopComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // State for loading
+  const [isLoading, setIsLoading] = useState(false);
+  const [feedback, setFeedback] = useState("");
 
   const handleCommentSubmit = async () => {
     if (comment.trim() === "") return;
@@ -80,23 +79,31 @@ export default function Home() {
     const result = await fetch("/api/getResponse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ comment }),
+      body: JSON.stringify({ comment, feedback }),
     });
     const data = await result.json();
     console.log("Data from server:", data);
     setResponse(data.response);
-    setContinuation(data.continuation);
-    setTopComments(data.topComments);
 
-    setIsLoading(false); // Set loading to false
+    setIsLoading(false);
   };
 
-  const handleFeedbackSubmit = (feedbackData) => {
-    fetch("/api/submitFeedback", {
+  const handleFeedbackSubmit = async (feedbackData) => {
+    setFeedback(feedbackData.feedback); // Store feedback
+
+    const result = await fetch("/api/getResponse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(feedbackData),
+      body: JSON.stringify({ comment, feedback: feedbackData.feedback }),
     });
+    const data = await result.json();
+    setResponse(data.response); // Update the response state
+  };
+
+  const handleClear = () => {
+    setComment("");
+    setResponse("");
+    setFeedback("");
   };
 
   return (
@@ -107,15 +114,14 @@ export default function Home() {
         setComment={setComment}
         onSubmit={handleCommentSubmit}
       />
+      {comment && <button onClick={handleClear}>Clear</button>}
+      {comment && (
+        <button onClick={handleCommentSubmit}>Regenerate Response</button>
+      )}
       {isLoading && <div className="loading-spinner"></div>}{" "}
       {/* Loading spinner */}
-      {response && (
-        <ResponseDisplay response={response} continuation={continuation} />
-      )}
-      {topComments && topComments.length > 0 && (
-        <TopComments comments={topComments} />
-      )}
-      <FeedbackForm onSubmit={handleFeedbackSubmit} />
+      {response && <ResponseDisplay response={response} />}
+      {response && <FeedbackForm onSubmit={handleFeedbackSubmit} />}
     </div>
   );
 }
