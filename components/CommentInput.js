@@ -21,9 +21,7 @@
 import React from "react";
 
 export default function CommentInput({ comment, setComment, onSubmit }) {
-  const handleCommentSubmit = (e) => {
-    //prevent default form submission
-    e.preventDefault();
+  const handleCommentSubmit = () => {
     if (comment.trim() === "") return;
     onSubmit();
   };
