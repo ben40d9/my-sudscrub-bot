@@ -118,9 +118,6 @@ export default function Home() {
       {/* {comment && (
         <button onClick={handleCommentSubmit}>Regenerate Response</button>
       )} */}
-      {response && (
-        <button onClick={handleCommentSubmit}>Regenerate Response</button>
-      )}
       {isLoading && <div className="loading-spinner"></div>}{" "}
       {/* Loading spinner */}
       {response && <ResponseDisplay response={response} />}
