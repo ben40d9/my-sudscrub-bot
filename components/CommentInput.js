@@ -21,14 +21,15 @@
 import React from "react";
 
 export default function CommentInput({ comment, setComment, onSubmit }) {
-  const handleCommentSubmit = () => {
+  const handleCommentSubmit = (e) => {
+    //prevent default form submission
+    e.preventDefault();
     if (comment.trim() === "") return;
     onSubmit();
-    // setComment("");
   };
 
   return (
-    <div className="comment-input">
+    <div className="comment-input" onSubmit={handleCommentSubmit}>
       <h2>Enter your comment for the bot to respond to:</h2>
       <input
         className="comment-input-field"
