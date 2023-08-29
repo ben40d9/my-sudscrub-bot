@@ -19,7 +19,7 @@ const getRefinedResponse = async (req, res) => {
       score
     );
 
-    console.log(`Response from generateResponse: ${response}`);
+    console.log(`Response from generateRefinedResponse: ${response}`);
 
     // Send the refined response back to the client
     res.status(200).json({ response });
