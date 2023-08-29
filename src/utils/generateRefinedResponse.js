@@ -73,8 +73,8 @@ export const generateRefinedResponse = async (
     ${knowledge}\n\n
     Original Comment: ${comment}\n
     Original Response: ${originalResponse}\n
-    Feedback: ${feedback}\n
-    Score: ${score}\n\n
+    Feedback, this is feedback about the original response and how to edit the reply to better fit the Sud Scrub voice: ${feedback}\n
+    Score, this is a score for the original response that is submitted in unison with the feedback. So you can use this to measure how well the original reply fits my intended voice: ${score}\n\n
     Refined Response:
   `;
 
