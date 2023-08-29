@@ -1,51 +1,23 @@
-// import { useState } from "react";
-
-// export default function FeedbackForm({ onSubmit }) {
-//   const [feedback, setFeedback] = useState("");
-//   const [score, setScore] = useState(5);
-
-//   const handleFeedbackSubmit = () => {
-//     onSubmit({ feedback, score });
-//     setFeedback("");
-//     setScore(5);
-//   };
-
-//   return (
-//     <div className="feedback-form">
-//       <h2>
-//         Provide feedback to help improve the response and then rate the
-//         response:
-//       </h2>
-//       <input
-//         type="text"
-//         value={feedback}
-//         onChange={(e) => setFeedback(e.target.value)}
-//         placeholder="Enter feedback"
-//       />
-//       <select value={score} onChange={(e) => setScore(Number(e.target.value))}>
-//         {[1, 2, 3, 4, 5].map((value) => (
-//           <option key={value} value={value}>
-//             {value}
-//           </option>
-//         ))}
-//       </select>
-//       <button onClick={handleFeedbackSubmit}>Submit Feedback</button>
-//     </div>
-//   );
-// }
-
-// components/FeedbackForm.js
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Import useEffect
 
 export default function FeedbackForm({ onSubmit }) {
   const [feedback, setFeedback] = useState("");
   const [score, setScore] = useState(5);
+  const [feedbackReceived, setFeedbackReceived] = useState(false);
 
   const handleFeedbackSubmit = () => {
     onSubmit({ feedback, score });
     setFeedback("");
     setScore(5);
+    setFeedbackReceived(true);
   };
+
+  useEffect(() => {
+    if (feedbackReceived) {
+      const timer = setTimeout(() => setFeedbackReceived(false), 3000); // Reset after 3 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [feedbackReceived]);
 
   return (
     <div className="feedback-form">
@@ -73,8 +45,12 @@ export default function FeedbackForm({ onSubmit }) {
           <option value="5">5 - Perfect response</option>
         </select>
       </div>
-      <button onClick={handleFeedbackSubmit}>Submit Feedback</button>
-
+      {feedbackReceived && (
+        <div className="feedback-received">Feedback Received ✅</div>
+      )}
+      <button onClick={handleFeedbackSubmit} disabled={feedbackReceived}>
+        {feedbackReceived ? "Feedback Submitted" : "Submit Feedback"}
+      </button>
       <style jsx>{`
         .feedback-form {
           background-color: #f2f2f2;
@@ -96,6 +72,13 @@ export default function FeedbackForm({ onSubmit }) {
           border: 1px solid #ccc;
           border-radius: 4px;
         }
+        .feedback-received {
+          color: #4caf50; // Soft green
+          font-weight: bold;
+          margin-top: 10px;
+          opacity: ${feedbackReceived ? 1 : 0};
+          transition: opacity 0.8s ease-in-out;
+        }
         button {
           margin-top: 20px;
           padding: 10px 20px;
@@ -105,8 +88,9 @@ export default function FeedbackForm({ onSubmit }) {
           border-radius: 4px;
           cursor: pointer;
         }
-        button:hover {
-          background-color: #0056b3;
+        button:disabled {
+          background-color: #ccc;
+          cursor: not-allowed;
         }
       `}</style>
     </div>
