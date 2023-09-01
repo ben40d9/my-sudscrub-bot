@@ -165,15 +165,11 @@ export const generateResponse = async (comment, feedback = "") => {
   if (responseChunks.length > 1) {
     return {
       response: responseChunks[0],
-      // continuation: "Continued: " + responseChunks[1],
-      // topComments: [], // Include your logic for topComments if needed
     };
   } else {
     console.log("else statement in generateResponse.js");
     return {
       response: responseChunks[0],
-      // continuation: "",
-      // topComments: [], // Include your logic for topComments if needed
     };
   }
 };

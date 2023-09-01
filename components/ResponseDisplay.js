@@ -1,4 +1,3 @@
-// // components/ResponseDisplay.js
 // export default function ResponseDisplay({ response, continuation }) {
 //   return (
 //     <div className="response-display">
@@ -8,7 +7,6 @@
 //     </div>
 //   );
 // }
-// components/ResponseDisplay.js
 
 export default function ResponseDisplay({ response, continuation }) {
   return (
