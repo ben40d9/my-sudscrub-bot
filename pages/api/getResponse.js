@@ -1,5 +1,10 @@
 import { connectToDatabase } from "../../src/utils/mongodb/db.js";
+
+//this is the response generated using the original model
 import { generateResponse } from "../../src/utils/generateResponse.js";
+
+//this is the response generated using fine-tuning
+import { generateFineTunedResponse } from "../../src/utils/openai/fineTunedResponse.js";
 
 const getResponse = async (req, res) => {
   try {
@@ -13,11 +18,11 @@ const getResponse = async (req, res) => {
     const { db } = await connectToDatabase();
 
     // Send the response back to the frontend
-    const { response } = await generateResponse(comment, feedback);
+    // const { response } = await generateResponse(comment, feedback);
+    // console.log(`Response from generateResponse: ${response}`);
 
-    console.log(`Response from generateResponse: ${response}`);
-    // console.log(`Response from topComments: ${topComments}`);
-    // console.log(`Response from continuation: ${continuation}`);
+    const { response } = await generateFineTunedResponse(comment);
+    console.log(`Response from generateFineTunedResponse: ${response}`);
 
     res.json({ response });
   } catch (error) {
