@@ -93,7 +93,7 @@ export const generateResponse = async (comment, feedback = "") => {
   let prompt = `${tone}\n\n${guidelines}\n\nKnowledge about Sud Scrub:\n${knowledge}\n\nPrevious Similar Comments and Replies (Use these as reference):\n${conversationHistory}\n\nRespond to the following comment as if you are the AI social media manager for Sud Scrub:\n"${comment}"\nResponse:`;
 
   if (feedback) {
-    prompt += `\n\nFeedback: ${feedback}`;
+    prompt += `\n\nFeedback: Edit the given reply based on the following: ${feedback}`;
   }
 
   // openAI api call to generate response
@@ -103,73 +103,74 @@ export const generateResponse = async (comment, feedback = "") => {
     max_tokens: 300,
   });
 
-  // // let responseText = response.choices[0].text.trim();
-  // let fullResponseText = response.choices[0].text.trim();
-  // console.log(`Here is the full response text: ${fullResponseText}`);
+  // let responseText = response.choices[0].text.trim();
+  let fullResponseText = response.choices[0].text.trim();
+  console.log(`Here is the full response text: ${fullResponseText}`);
 
-  // return {
-  //   //for now we are just returning the full response text, we will work on a function to trim it later
-  //   response: fullResponseText,
-  // };
-
-  // // Split the response into chunks of 150 characters, focusing on spaces
-  // let responseChunks = [];
-  // while (responseText.length > 150) {
-  //   // Find the nearest space before the 150 character limit
-  //   const splitIndex = responseText.lastIndexOf(" ", 150);
-
-  //   // If no space is found, split at the 150th character
-  //   const chunk =
-  //     splitIndex > 0
-  //       ? responseText.substring(0, splitIndex)
-  //       : responseText.substring(0, 150);
-
-  //   responseChunks.push(chunk);
-  //   responseText = responseText
-  //     .substring(splitIndex > 0 ? splitIndex : 150)
-  //     .trim();
-  // }
-  // responseChunks.push(responseText);
-
-  // // Return the response in the desired format
-  // if (responseChunks.length > 1) {
-  //   return {
-  //     response: responseChunks[0],
-  //     continuation: "Continued: " + responseChunks[1],
-  //     topComments: [], // Include your logic for topComments if needed
-  //   };
-  // } else {
-  //   return {
-  //     response: responseChunks[0],
-  //     continuation: "",
-  //     topComments: [], // Include your logic for topComments if needed
-  //   };
-  // }
-
-  let responseText = response.choices[0].text.trim();
-
-  // Split the response into logical chunks of 150 characters, focusing on sentence boundaries
-  let responseChunks = [];
-  let currentChunk = "";
-  responseText.split(". ").forEach((sentence) => {
-    if (currentChunk.length + sentence.length <= 150) {
-      currentChunk += sentence + ". ";
-    } else {
-      responseChunks.push(currentChunk.trim());
-      currentChunk = sentence + ". ";
-    }
-  });
-  responseChunks.push(currentChunk.trim());
-
-  // Return the response in the desired format
-  if (responseChunks.length > 1) {
-    return {
-      response: responseChunks[0],
-    };
-  } else {
-    console.log("else statement in generateResponse.js");
-    return {
-      response: responseChunks[0],
-    };
-  }
+  return {
+    //for now we are just returning the full response text, we will work on a function to trim it later
+    response: fullResponseText,
+  };
 };
+
+// // Split the response into chunks of 150 characters, focusing on spaces
+// let responseChunks = [];
+// while (responseText.length > 150) {
+//   // Find the nearest space before the 150 character limit
+//   const splitIndex = responseText.lastIndexOf(" ", 150);
+
+//   // If no space is found, split at the 150th character
+//   const chunk =
+//     splitIndex > 0
+//       ? responseText.substring(0, splitIndex)
+//       : responseText.substring(0, 150);
+
+//   responseChunks.push(chunk);
+//   responseText = responseText
+//     .substring(splitIndex > 0 ? splitIndex : 150)
+//     .trim();
+// }
+// responseChunks.push(responseText);
+
+// // Return the response in the desired format
+// if (responseChunks.length > 1) {
+//   return {
+//     response: responseChunks[0],
+//     continuation: "Continued: " + responseChunks[1],
+//     topComments: [], // Include your logic for topComments if needed
+//   };
+// } else {
+//   return {
+//     response: responseChunks[0],
+//     continuation: "",
+//     topComments: [], // Include your logic for topComments if needed
+//   };
+// }
+
+//   let responseText = response.choices[0].text.trim();
+
+//   // Split the response into logical chunks of 150 characters, focusing on sentence boundaries
+//   let responseChunks = [];
+//   let currentChunk = "";
+//   responseText.split(". ").forEach((sentence) => {
+//     if (currentChunk.length + sentence.length <= 150) {
+//       currentChunk += sentence + ". ";
+//     } else {
+//       responseChunks.push(currentChunk.trim());
+//       currentChunk = sentence + ". ";
+//     }
+//   });
+//   responseChunks.push(currentChunk.trim());
+
+//   // Return the response in the desired format
+//   if (responseChunks.length > 1) {
+//     return {
+//       response: responseChunks[0],
+//     };
+//   } else {
+//     console.log("else statement in generateResponse.js");
+//     return {
+//       response: responseChunks[0],
+//     };
+//   }
+// };
