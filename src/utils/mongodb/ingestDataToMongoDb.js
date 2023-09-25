@@ -1,5 +1,7 @@
 // src/utils/ingestDataToMongoDB.js
 
+//test push
+
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { MongoDBAtlasVectorSearch } from "langchain/vectorstores/mongodb_atlas";
 import { CohereEmbeddings } from "langchain/embeddings/cohere";
