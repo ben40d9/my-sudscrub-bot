@@ -157,8 +157,8 @@ export default function Home() {
   const [comment, setComment] = useState("");
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [feedback, setFeedback] = useState("");
-  const [score, setScore] = useState(5);
+  // const [feedback, setFeedback] = useState("");
+  // const [score, setScore] = useState(5);
 
   // handles comment submission
   const handleCommentSubmit = async () => {
@@ -179,36 +179,36 @@ export default function Home() {
     setIsLoading(false);
   };
 
-  // handles feedback submission
-  const handleFeedbackSubmit = async (feedbackData) => {
-    setFeedback(feedbackData.feedback);
-    setScore(feedbackData.score);
+  // // handles feedback submission
+  // const handleFeedbackSubmit = async (feedbackData) => {
+  //   setFeedback(feedbackData.feedback);
+  //   setScore(feedbackData.score);
 
-    setIsLoading(true);
+  //   setIsLoading(true);
 
-    // Fetch refined response based on feedback
-    const result = await fetch("/api/getRefinedResponse", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        comment,
-        originalResponse: response,
-        feedback: feedbackData.feedback,
-        score: feedbackData.score,
-      }),
-    });
+  //   // Fetch refined response based on feedback
+  //   const result = await fetch("/api/getRefinedResponse", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       comment,
+  //       originalResponse: response,
+  //       feedback: feedbackData.feedback,
+  //       score: feedbackData.score,
+  //     }),
+  //   });
 
-    const data = await result.json();
-    setResponse(data.response);
+  //   const data = await result.json();
+  //   setResponse(data.response);
 
-    setIsLoading(false);
-  };
+  //   setIsLoading(false);
+  // };
 
   const handleClear = () => {
     setComment("");
     setResponse("");
-    setFeedback("");
-    setScore(5);
+    // setFeedback("");
+    // setScore(5);
   };
 
   return (
@@ -225,7 +225,7 @@ export default function Home() {
       )}
       {isLoading && <div className="loading-spinner"></div>}
       {response && <ResponseDisplay response={response} />}
-      {response && <FeedbackForm onSubmit={handleFeedbackSubmit} />}
+      {/* {response && <FeedbackForm onSubmit={handleFeedbackSubmit} />} */}
     </div>
   );
 }
