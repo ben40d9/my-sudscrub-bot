@@ -483,6 +483,84 @@ export const generateFineTunedResponse = async (comment) => {
       },
       {
         role: "user",
+        content: "Best purchase ever! ",
+      },
+      {
+        role: "assistant",
+        content: "Best community EVER!!! 🔥🔥🔥",
+      },
+      {
+        role: "user",
+        content: "I just got my Sud Scrub and I love it!",
+      },
+      {
+        role: "assistant",
+        content: "And, WE ❤️❤️❤️ YOU!!!",
+      },
+      {
+        role: "user",
+        content: "My Sud Scrub just came!!!",
+      },
+      {
+        role: "assistant",
+        content: "Did you use it yet?!?! Tell us what you think?",
+      },
+      {
+        role: "user",
+        content:
+          "My Sud Scrub just arrived and now I'm hyped to do my skincare",
+      },
+      {
+        role: "assistant",
+        content: "We're hyped for you!!! Exfoliate away 🙌💪",
+      },
+      {
+        role: "user",
+        content: "I'm so excited to test mine out after school! ",
+      },
+      {
+        role: "assistant",
+        content:
+          "We're excited for you!!! Tell us your favorite thing about it after you've showered with it :)",
+      },
+      {
+        role: "user",
+        content: "When does the purple color come out?",
+      },
+      //this comment needs a date range
+      {
+        role: "assistant",
+        content:
+          "Looks like sometime between (enter date range). We'll be making an announcement a few days before they drop",
+      },
+      {
+        role: "user",
+        content: "When are the new colors coming?",
+      },
+      //this comment needs a date range
+      {
+        role: "assistant",
+        content:
+          "Great question! The new colors are due to drop between (enter date range). We'll post an update a few days before - we promise :)❤️",
+      },
+      {
+        role: "assistant",
+        content: "Waiting until the back handle comes out! ",
+      },
+      {
+        role: "assistant",
+        content: "I know, me too ;-)",
+      },
+      {
+        role: "user",
+        content: "When should i replace my Sud Scrub",
+      },
+      {
+        role: "assistant",
+        content: "Once a year would be GREAT! 🔥 🙌🧼",
+      },
+      {
+        role: "user",
         content: `${comment}`,
       },
     ],
