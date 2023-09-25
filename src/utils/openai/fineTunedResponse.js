@@ -5,7 +5,6 @@ import OpenAIApi from "openai";
 import "dotenv/config";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-console.log(OPENAI_API_KEY);
 
 const openai = new OpenAIApi({
   apiKey: OPENAI_API_KEY,
@@ -502,5 +501,3 @@ export const generateFineTunedResponse = async (comment) => {
     response: contentString,
   };
 };
-
-// generateFineTunedResponse("You guys should make a back scrubber attachment");
