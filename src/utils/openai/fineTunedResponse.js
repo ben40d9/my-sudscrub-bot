@@ -662,8 +662,7 @@ export const generateFineTunedResponse = async (comment) => {
       },
       {
         role: "user",
-        content:
-          "Can I get a discount\n\nI want one but I'm broke\n\nI can't afford one I guess i'll never be clean\nHi! You can roll the dice and enter our weekly giveaway at sudscrub.com. You may be one of 5 lucky winners every week\nI never win the givewaway\n\"You miss 100% of the shots you don't take\" - Michael Scott (winking emoji)\n\n",
+        content: "Can I get a discount",
       },
       {
         role: "assistant",
