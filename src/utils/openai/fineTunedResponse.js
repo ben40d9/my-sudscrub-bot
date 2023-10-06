@@ -1169,6 +1169,15 @@ export const generateFineTunedResponse = async (comment) => {
       },
       {
         role: "user",
+        content: "You guys need to make a body face scrubber bundle",
+      },
+      {
+        role: "assistant",
+        content:
+          "You can make your own bundle now with the face and body scrubber since the face scrubber is sold as a single, just like the body scrubber!",
+      },
+      {
+        role: "user",
         content: `${comment}`,
       },
     ],
