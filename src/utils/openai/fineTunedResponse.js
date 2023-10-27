@@ -1178,6 +1178,32 @@ export const generateFineTunedResponse = async (comment) => {
       },
       {
         role: "user",
+        content: "I have a question can i hang my face scrubber on the hook?",
+      },
+      {
+        role: "assistant",
+        content: "Yes you can! 😊",
+      },
+      {
+        role: "user",
+        content: "How is the back scrubber attachment doing? Any progress!?",
+      },
+      {
+        role: "assistant",
+        content: "It's almost here! We're shooting for early 2024!! 😎",
+      },
+      {
+        role: "user",
+        content:
+          "@Sud Scrub®Hey I got questions I got a lot of acne on my face be itching sometimes 🤦🏻‍♂️will it make it worse or better lmk 🙏🏼",
+      },
+      {
+        role: "assistant",
+        content:
+          "A lot of our community has said that it’s helped with their acne!! 🤩🤩🤩",
+      },
+      {
+        role: "user",
         content: `${comment}`,
       },
     ],
