@@ -951,7 +951,7 @@ export const generateFineTunedResponse = async (comment) => {
       },
       {
         role: "assistant",
-        content: "You won't  be able to find Kevin here 🤷",
+        content: "You won't be able to find Kevin here 🤷",
       },
       {
         role: "user",
@@ -1201,6 +1201,30 @@ export const generateFineTunedResponse = async (comment) => {
         role: "assistant",
         content:
           "A lot of our community has said that it’s helped with their acne!! 🤩🤩🤩",
+      },
+      {
+        role: "user",
+        content: "THERE’S TWO OF YOU ?!!",
+      },
+      {
+        role: "assistant",
+        content: "So true literally everyone is SO SHOCKED 😱",
+      },
+      {
+        role: "user",
+        content: "Twins the whole time????????",
+      },
+      {
+        role: "assistant",
+        content: "Yes- there's two of us! 😀",
+      },
+      {
+        role: "user",
+        content: "THERES TWO OF YOU????",
+      },
+      {
+        role: "assistant",
+        content: "SURPRISE 🫨🫨",
       },
       {
         role: "user",
